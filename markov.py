@@ -10,9 +10,7 @@ def open_and_read_file(file_path):
     the file's contents as one string of text.
     """
 
-    # your code goes here
-
-    return "Contents of your file as one long string"
+    return open(file_path).read()
 
 
 def make_chains(text_string):
@@ -42,7 +40,23 @@ def make_chains(text_string):
 
     chains = {}
 
-    # your code goes here
+    # Creating a big list of all the words in the text
+    words_list = text_string.split()
+
+    # Going through list using its indices
+    for i in range(len(words_list)-2):
+        # make tuple
+        word_pair = (words_list[i] , words_list[i+1])
+
+        # get next word after tuple
+        next_word = [words_list[i+2]]
+        
+        # use get to check for if key is already present
+        # add them as a pair to the dictionary, tuple as the key, list as value
+        chains[word_pair] = chains.get(word_pair, []) + next_word
+
+    print(chains)
+
 
     return chains
 
