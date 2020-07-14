@@ -55,18 +55,30 @@ def make_chains(text_string):
         # add them as a pair to the dictionary, tuple as the key, list as value
         chains[word_pair] = chains.get(word_pair, []) + next_word
 
-    print(chains)
-
-
     return chains
 
 
 def make_text(chains):
     """Return text from chains."""
 
-    words = []
 
-    # your code goes here
+    # start somewhere
+    bigram = choice(list(chains.keys()))
+
+    # start list with first two words
+    words =[bigram[0], bigram[1]]
+
+    while bigram in chains:        
+        # use tuple as key to get list of next words
+        # choose a next word with 'choice' (returns words as a string)
+        next_word = choice(chains[bigram])
+        
+        # add chosen word to words list
+        words.append(next_word) 
+
+        # make new key from second tuple item and chosen word
+        bigram = (bigram[1], next_word)
+
 
     return " ".join(words)
 
