@@ -1,5 +1,6 @@
 """Generate Markov text from text files."""
 
+import sys
 from random import choice
 
 
@@ -43,17 +44,30 @@ def make_chains(text_string):
     # Creating a big list of all the words in the text
     words_list = text_string.split()
 
+    n = 2
+
     # Going through list using its indices
-    for i in range(len(words_list)-2):
+    for i in range(len(words_list)-n):
         # make tuple
-        word_pair = (words_list[i] , words_list[i+1])
+        # tuple made out of the words_list words at indices i to i+(n-1)
+        ngram_as_list = []
+
+        ngram_as_list = [words_list[num] for num in range(i,(i+n))]
+
+        # recursively make a list
+       # while counter < n:
+       #      ngram_as_list.append(words_list[i])
+       #      counter += 1 
+
+        # create a tuple from that list
+        ngram = tuple(ngram_as_list)
 
         # get next word after tuple
-        next_word = [words_list[i+2]]
+        next_word = [words_list[i+n]]
         
         # use get to check for if key is already present
         # add them as a pair to the dictionary, tuple as the key, list as value
-        chains[word_pair] = chains.get(word_pair, []) + next_word
+        chains[ngram] = chains.get(ngram, []) + next_word
 
     return chains
 
@@ -79,11 +93,11 @@ def make_text(chains):
         # make new key from second tuple item and chosen word
         bigram = (bigram[1], next_word)
 
-
     return " ".join(words)
 
 
-input_path = "green-eggs.txt"
+
+input_path = sys.argv[1]
 
 # Open the file and turn it into one long string
 input_text = open_and_read_file(input_path)
