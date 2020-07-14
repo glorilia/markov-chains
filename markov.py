@@ -44,7 +44,7 @@ def make_chains(text_string):
     # Creating a big list of all the words in the text
     words_list = text_string.split()
 
-    n = 2
+    n = 3
 
     # Going through list using its indices
     for i in range(len(words_list)-n):
@@ -77,21 +77,21 @@ def make_text(chains):
 
 
     # start somewhere
-    bigram = choice(list(chains.keys()))
+    ngram = choice(list(chains.keys()))
 
     # start list with first two words
-    words =[bigram[0], bigram[1]]
+    words =[ngram[0], ngram[1]]
 
-    while bigram in chains:        
+    while ngram in chains:        
         # use tuple as key to get list of next words
         # choose a next word with 'choice' (returns words as a string)
-        next_word = choice(chains[bigram])
+        next_word = choice(chains[ngram])
         
         # add chosen word to words list
         words.append(next_word) 
 
         # make new key from second tuple item and chosen word
-        bigram = (bigram[1], next_word)
+        ngram = (ngram[1], next_word)
 
     return " ".join(words)
 
