@@ -4,14 +4,20 @@ import sys
 from random import choice
 
 
-def open_and_read_file(file_path):
+def open_and_read_file(file_paths):
     """Take file path as string; return text as string.
 
     Takes a string that is a file path, opens the file, and turns
     the file's contents as one string of text.
     """
+    all_text = ''
 
-    return open(file_path).read()
+    for file in file_paths:
+        text = open(file).read()
+        all_text = all_text + text
+
+
+    return all_text
 
 
 def make_chains(text_string):
@@ -44,7 +50,7 @@ def make_chains(text_string):
     # Creating a big list of all the words in the text
     words_list = text_string.split()
 
-    n = 3
+    n = 2
 
     # Going through list using its indices
     for i in range(len(words_list)-n):
@@ -77,7 +83,11 @@ def make_text(chains):
 
 
     # start somewhere
-    ngram = choice(list(chains.keys()))
+    cap_keys = [key for key in chains.keys() if key[0].istitle()]
+
+    ngram = choice(cap_keys)
+
+    # ngram = choice(list(chains.keys()))
 
     # start list with first two words
     words =list(ngram)
@@ -108,7 +118,7 @@ def make_text(chains):
 
 
 
-input_path = sys.argv[1]
+input_path = sys.argv[1:]
 
 # Open the file and turn it into one long string
 input_text = open_and_read_file(input_path)
