@@ -80,7 +80,7 @@ def make_text(chains):
     ngram = choice(list(chains.keys()))
 
     # start list with first two words
-    words =[ngram[0], ngram[1]]
+    words =list(ngram)
 
     while ngram in chains:        
         # use tuple as key to get list of next words
@@ -91,7 +91,18 @@ def make_text(chains):
         words.append(next_word) 
 
         # make new key from second tuple item and chosen word
-        ngram = (ngram[1], next_word)
+        
+        # make ngram from tuple to list
+        ngram_list = list(ngram)
+
+        # make slice from 1 to last
+        ngram_slice = ngram_list[1:]
+    
+        # add our chosen word to the slice
+        ngram_slice.append(next_word)
+
+        # consciously re-tuple our list
+        ngram = tuple(ngram_slice)
 
     return " ".join(words)
 
